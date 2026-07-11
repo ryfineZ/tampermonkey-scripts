@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>支付链接生成器界面检查</title>
+  <style>
+    :root { --fixture-background: #f4f4f4; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--fixture-background);
+      font-family: system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <main aria-label="测试页面"></main>
+  <script src="../gpt-payment-link-generator.user.js"></script>
+  <script>
+    setTimeout(() => {
+      document.getElementById('__gpt_checkout_btn__')?.click();
+      document.querySelector('[data-plan="business"]')?.click();
+    }, 100);
+  </script>
+</body>
+</html>

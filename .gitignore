@@ -1,0 +1,7 @@
+.DS_Store
+*.har
+改前.js
+改后.js
+chatgpt-team-subscription-helper.user.js
+docs/
+
