@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GPT 支付链接生成器
 // @namespace    http://tampermonkey.net/
-// @version      1.5.1
+// @version      1.5.2
 // @description  在 ChatGPT 页面生成 Plus、Pro、Business 各地区订阅支付链接（短链/长链）
 // @author       https://github.com/fangyuan99
 // @match        https://chatgpt.com/*
@@ -132,6 +132,7 @@
     { code: 'ZA', name: '南非', flag: '🇿🇦', currency: 'ZAR' },
     { code: 'NG', name: '尼日利亚', flag: '🇳🇬', currency: 'NGN' },
     { code: 'EG', name: '埃及', flag: '🇪🇬', currency: 'EGP' },
+    { code: 'KE', name: '肯尼亚', flag: '🇰🇪', currency: 'KES' },
   ];
 
   const PANEL_ID = '__gpt_checkout_panel__';
