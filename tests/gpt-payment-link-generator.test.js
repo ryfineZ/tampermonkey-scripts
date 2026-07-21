@@ -140,9 +140,15 @@ test('套餐配置保留越南 Plus、越南 Pro 并新增 Business', () => {
   assert.match(source, /id:\s*'business'/);
 });
 
-test('Business 国家配置包含肯尼亚及其货币', () => {
+test('Business 国家配置包含肯尼亚并使用 USD', () => {
   assert.match(
     source,
-    /code:\s*'KE',\s*name:\s*'肯尼亚',\s*flag:\s*'🇰🇪',\s*currency:\s*'KES'/
+    /code:\s*'KE',\s*name:\s*'肯尼亚',\s*flag:\s*'🇰🇪',\s*currency:\s*'USD'/
   );
+});
+
+test('422 字段校验错误会显示具体原因', () => {
+  assert.match(source, /Array\.isArray\(detail\)/);
+  assert.match(source, /item\?\.msg/);
+  assert.match(source, /messages\.join\('；'\)/);
 });

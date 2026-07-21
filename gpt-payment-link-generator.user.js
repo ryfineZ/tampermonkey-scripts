@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GPT 支付链接生成器
 // @namespace    http://tampermonkey.net/
-// @version      1.5.2
+// @version      1.5.3
 // @description  在 ChatGPT 页面生成 Plus、Pro、Business 各地区订阅支付链接（短链/长链）
 // @author       https://github.com/fangyuan99
 // @match        https://chatgpt.com/*
@@ -132,7 +132,7 @@
     { code: 'ZA', name: '南非', flag: '🇿🇦', currency: 'ZAR' },
     { code: 'NG', name: '尼日利亚', flag: '🇳🇬', currency: 'NGN' },
     { code: 'EG', name: '埃及', flag: '🇪🇬', currency: 'EGP' },
-    { code: 'KE', name: '肯尼亚', flag: '🇰🇪', currency: 'KES' },
+    { code: 'KE', name: '肯尼亚', flag: '🇰🇪', currency: 'USD' },
   ];
 
   const PANEL_ID = '__gpt_checkout_panel__';
@@ -236,9 +236,27 @@
     }
   }
 
+  function formatErrorDetail(detail) {
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+      const messages = detail.map(item => {
+        if (typeof item === 'string') return item;
+        if (typeof item?.msg !== 'string') return '';
+        const location = Array.isArray(item.loc)
+          ? item.loc.filter(part => part !== 'body').join('.')
+          : '';
+        return location ? `${location}: ${item.msg}` : item.msg;
+      }).filter(Boolean);
+      if (messages.length) return messages.join('；');
+    }
+    if (detail && typeof detail.message === 'string') return detail.message;
+    return '';
+  }
+
   function getErrorMessage(data, fallback = '请求失败') {
     if (!data) return fallback;
-    if (typeof data.detail === 'string') return data.detail;
+    const detail = formatErrorDetail(data.detail);
+    if (detail) return detail;
     if (typeof data.message === 'string') return data.message;
     if (typeof data.error === 'string') return data.error;
     if (typeof data.raw === 'string') return data.raw.slice(0, 500);
